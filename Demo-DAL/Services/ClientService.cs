@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Demo_DAL.Services
 {
-    class ClientService
+    public class ClientService
     {
         private string ConnectionString { get; set; } = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theatre-DB;Integrated Security=True";
         public IEnumerable<Client> Get()
@@ -75,12 +75,39 @@ namespace Demo_DAL.Services
 
         public bool Update(int id, Client entity)
         {
-            return false;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = @"UPDATE [Client]
+                                            SET [nom] = @nom,
+                                                [prenom] = @prenom,
+                                                [email] = @email,
+                                                [adresse] = @adresse
+                                            WHERE [idClient] = @id";
+                    command.Parameters.AddWithValue("nom", entity.nom);
+                    command.Parameters.AddWithValue("prenom", entity.prenom);
+                    command.Parameters.AddWithValue("email", entity.email);
+                    command.Parameters.AddWithValue("adresse", (object)entity.adresse ?? DBNull.Value);
+                    command.Parameters.AddWithValue("id", id);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
         }
 
         public bool Delete(int id)
         {
-            return false;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "DELETE FROM [Client] WHERE [idClient] = @id";
+                    command.Parameters.AddWithValue("id", id);
+                    connection.Open();
+                    return command.ExecuteNonQuery() > 0;
+                }
+            }
         }
     }
 }
