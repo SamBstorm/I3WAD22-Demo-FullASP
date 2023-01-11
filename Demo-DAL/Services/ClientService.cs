@@ -1,6 +1,7 @@
 ﻿using Demo_DAL.Entities;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
@@ -32,12 +33,44 @@ namespace Demo_DAL.Services
 
         public Client Get(int id)
         {
-            return null;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SELECT [idClient], [nom], [prenom], [email], [adresse] FROM [Client] WHERE [idClient] = @id";
+                    command.Parameters.AddWithValue("id", id);
+                    connection.Open();
+                    using (SqlDataReader reader = command.ExecuteReader())
+                    {
+                        if (reader.Read()) return reader.ToClient();
+                        return null;
+
+                        //Format ternaire : return (reader.Read()) ? reader.ToClient() : null;
+                    }
+                }
+            }
         }
 
         public int Insert(Client entity)
         {
-            return 0;
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    /*command.CommandText = @"INSERT INTO [Client] ([nom], [prenom], [email], [pass], [adresse])
+                                            OUTPUT [inserted].[idClient]
+                                            VALUES (@nom, @prenom, @email, HASHBYTES('SHA2_512',@pass), @adresse)";*/
+                    command.CommandText = "SP_ClientAdd";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("nom", entity.nom);
+                    command.Parameters.AddWithValue("prenom", entity.prenom);
+                    command.Parameters.AddWithValue("email", entity.email);
+                    command.Parameters.AddWithValue("pass", entity.pass);
+                    command.Parameters.AddWithValue("adresse", (object) entity.adresse ?? DBNull.Value);
+                    connection.Open();
+                    return (int)command.ExecuteScalar();
+                }
+            }
         }
 
         public bool Update(int id, Client entity)
