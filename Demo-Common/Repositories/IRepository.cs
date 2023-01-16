@@ -4,7 +4,7 @@ using System.Text;
 
 namespace Demo_Common.Repositories
 {
-    interface IRepository<TEntity, TId>
+    public interface IRepository<TEntity, TId>
     {
         IEnumerable<TEntity> Get();
         TEntity Get(TId id);

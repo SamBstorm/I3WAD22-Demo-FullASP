@@ -1,4 +1,5 @@
 ﻿using Demo_BLL.Entities;
+using Demo_Common.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Demo_BLL.Services
 {
-    class ClientService
+    class ClientService : IClientRepository<Client, int>
     {
         private Demo_DAL.Services.ClientService _repository;
 
@@ -38,6 +39,11 @@ namespace Demo_BLL.Services
         public bool Delete(int id)
         {
             return _repository.Delete(id);
+        }
+
+        public int? CheckPassword(string email, string password)
+        {
+            return _repository.CheckPassword(email, password);
         }
     }
 }

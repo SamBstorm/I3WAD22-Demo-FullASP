@@ -1,4 +1,5 @@
-﻿using Demo_DAL.Entities;
+﻿using Demo_Common.Repositories;
+using Demo_DAL.Entities;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -9,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Demo_DAL.Services
 {
-    public class ClientService
+    public class ClientService : IClientRepository<Client, int>
     {
         private string ConnectionString { get; set; } = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theatre-DB;Integrated Security=True";
         public IEnumerable<Client> Get()
@@ -106,6 +107,23 @@ namespace Demo_DAL.Services
                     command.Parameters.AddWithValue("id", id);
                     connection.Open();
                     return command.ExecuteNonQuery() > 0;
+                }
+            }
+        }
+
+        public int? CheckPassword(string email, string password)
+        {
+            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            {
+                using (SqlCommand command = connection.CreateCommand())
+                {
+                    command.CommandText = "SP_ClientCheck";
+                    command.CommandType = CommandType.StoredProcedure;
+                    command.Parameters.AddWithValue("email", email);
+                    command.Parameters.AddWithValue("pass", password);
+                    connection.Open();
+                    object result = command.ExecuteScalar();
+                    return (result is DBNull)? null : (int?) result;
                 }
             }
         }
