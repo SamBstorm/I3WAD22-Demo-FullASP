@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Demo_BLL.Entities
 {
-    class Client
+    public class Client
     {
         public int idClient { get; set; }
         public string nom { get; set; }

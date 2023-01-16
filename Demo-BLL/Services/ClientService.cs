@@ -8,13 +8,13 @@ using System.Threading.Tasks;
 
 namespace Demo_BLL.Services
 {
-    class ClientService : IClientRepository<Client, int>
+    public class ClientService : IClientRepository<Client, int>
     {
-        private Demo_DAL.Services.ClientService _repository;
+        private readonly IClientRepository<Demo_DAL.Entities.Client, int> _repository;
 
-        public ClientService()
+        public ClientService(IClientRepository<Demo_DAL.Entities.Client, int> repository)
         {
-            _repository = new Demo_DAL.Services.ClientService();
+            _repository = repository;
         }
         public IEnumerable<Client> Get()
         {
