@@ -42,15 +42,18 @@ namespace Demo_ASP.Controllers
         // POST: ClientController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(ClientCreateForm form)
         {
-            try
+            if (!ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                form.pass = null;
+                form.confirmPass = null;
+                return View(form);
             }
-            catch
+            else
             {
-                return View();
+                int id = _services.Insert(form.ToBLL());
+                return RedirectToAction("Details", "Client", new { id = id });
             }
         }
 
