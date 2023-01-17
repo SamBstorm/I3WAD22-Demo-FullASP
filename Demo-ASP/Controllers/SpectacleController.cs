@@ -1,5 +1,5 @@
 ﻿using Demo_ASP.Handlers;
-using Demo_ASP.Models.ClientViewModels;
+using Demo_ASP.Models.SpectacleViewModels;
 using Demo_BLL.Entities;
 using Demo_Common.Repositories;
 using Microsoft.AspNetCore.Http;
@@ -11,59 +11,51 @@ using System.Threading.Tasks;
 
 namespace Demo_ASP.Controllers
 {
-    public class ClientController : Controller
+    public class SpectacleController : Controller
     {
-        private readonly IClientRepository<Client, int> _service;
+        private readonly ISpectacleRepository<Spectacle, int> _service;
 
-        public ClientController(IClientRepository<Client, int> service)
+        public SpectacleController(ISpectacleRepository<Spectacle, int> service)
         {
             _service = service;
         }
 
-        // GET: ClientController
+        // GET: SpectacleController
         public ActionResult Index()
         {
-            IEnumerable<ClientListItem> model = _service.Get().Select(e => e.ToListItem());
+            IEnumerable<SpectacleListItem> model = _service.Get().Select(e => e.ToListItem());
             return View(model);
         }
 
-        // GET: ClientController/Details/5
+        // GET: SpectacleController/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: ClientController/Create
+        // GET: SpectacleController/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: ClientController/Create
+        // POST: SpectacleController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(ClientCreateForm form)
+        public ActionResult Create(SpectacleCreateForm form)
         {
-            if (!ModelState.IsValid)
-            {
-                form.pass = null;
-                form.confirmPass = null;
-                return View(form);
-            }
-            else
-            {
-                int id = _service.Insert(form.ToBLL());
-                return RedirectToAction("Details", "Client", new { id = id });
-            }
+            if (!ModelState.IsValid) return View(form);
+            int id = _service.Insert(form.ToBLL());
+            return RedirectToAction("Details", new { id = id });
         }
 
-        // GET: ClientController/Edit/5
+        // GET: SpectacleController/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: ClientController/Edit/5
+        // POST: SpectacleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -78,13 +70,13 @@ namespace Demo_ASP.Controllers
             }
         }
 
-        // GET: ClientController/Delete/5
+        // GET: SpectacleController/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: ClientController/Delete/5
+        // POST: SpectacleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)

@@ -1,4 +1,4 @@
-﻿@model IEnumerable<ClientListItem>
+﻿@model IEnumerable<SpectacleListItem>
 
 @{
     ViewData["Title"] = "Index";
@@ -16,7 +16,7 @@
                 @Html.DisplayNameFor(model => model.nom)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.prenom)
+                @Html.DisplayNameFor(model => model.description)
             </th>
             <th></th>
         </tr>
@@ -28,12 +28,12 @@
                 @Html.DisplayFor(modelItem => item.nom)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.prenom)
+                @Html.DisplayFor(modelItem => item.description)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id=item.idClient }) |
-                @Html.ActionLink("Details", "Details", new { id=item.idClient }) |
-                @Html.ActionLink("Delete", "Delete", new { id=item.idClient })
+                @Html.ActionLink("Edit", "Edit", new { id=item.idSpectacle }) |
+                @Html.ActionLink("Details", "Details", new { id=item.idSpectacle }) |
+                @Html.ActionLink("Delete", "Delete", new { id=item.idSpectacle })
             </td>
         </tr>
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo_Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Demo_DAL.Entities
 {
-    class Spectacle
+    public class Spectacle : ISpectacle
     {
         //INTEGER
         public int idSpectacle { get; set; }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Demo_Common.Entities;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Demo_DAL.Entities
 {
-    public class Client
+    public class Client : IClient
     {
         //INTEGER
         public int idClient { get; set; }

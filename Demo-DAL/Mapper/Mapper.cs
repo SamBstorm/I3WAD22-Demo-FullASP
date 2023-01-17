@@ -23,5 +23,16 @@ namespace Demo_DAL
                 adresse = (record[nameof(Client.adresse)] is DBNull) ? null : (string)record[nameof(Client.adresse)]
             };
         }
+
+        public static Spectacle ToSpectacle(this IDataRecord record)
+        {
+            if (record is null) return null;
+            return new Spectacle()
+            {
+                idSpectacle = (int)record[nameof(Spectacle.idSpectacle)],
+                nom = (string)record[nameof(Spectacle.nom)],
+                description = (string)record[nameof(Spectacle.description)]
+            };
+        }
     }
 }

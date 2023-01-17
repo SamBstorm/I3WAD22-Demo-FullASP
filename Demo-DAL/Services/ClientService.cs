@@ -1,5 +1,6 @@
 ﻿using Demo_Common.Repositories;
 using Demo_DAL.Entities;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,12 +11,14 @@ using System.Threading.Tasks;
 
 namespace Demo_DAL.Services
 {
-    public class ClientService : IClientRepository<Client, int>
+    public class ClientService : BaseService, IClientRepository<Client, int>
     {
-        private string ConnectionString { get; set; } = @"Data Source=(localdb)\MSSQLLocalDB;Initial Catalog=Theatre-DB;Integrated Security=True";
+        public ClientService(IConfiguration config) : base(config, "Theatre-DB")
+        {
+        }
         public IEnumerable<Client> Get()
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using(SqlCommand command = connection.CreateCommand())
                 {
@@ -34,7 +37,7 @@ namespace Demo_DAL.Services
 
         public Client Get(int id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
@@ -54,7 +57,7 @@ namespace Demo_DAL.Services
 
         public int Insert(Client entity)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
@@ -76,7 +79,7 @@ namespace Demo_DAL.Services
 
         public bool Update(int id, Client entity)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
@@ -99,7 +102,7 @@ namespace Demo_DAL.Services
 
         public bool Delete(int id)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {
@@ -113,7 +116,7 @@ namespace Demo_DAL.Services
 
         public int? CheckPassword(string email, string password)
         {
-            using (SqlConnection connection = new SqlConnection(ConnectionString))
+            using (SqlConnection connection = new SqlConnection(_connectionString))
             {
                 using (SqlCommand command = connection.CreateCommand())
                 {

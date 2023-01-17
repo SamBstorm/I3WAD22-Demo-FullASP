@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Demo_ASP.Models.ClientModelView
+namespace Demo_ASP.Models.ClientViewModels
 {
     public class ClientCreateForm
     {

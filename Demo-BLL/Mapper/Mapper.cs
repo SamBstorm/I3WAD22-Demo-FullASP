@@ -10,6 +10,7 @@ namespace Demo_BLL
 {
     static class Mapper
     {
+        #region Mapper Client
         public static BLL.Client ToBLL(this DAL.Client entity)
         {
             if (entity is null) return null;
@@ -37,5 +38,33 @@ namespace Demo_BLL
                 adresse = entity.adresse
             };
         }
+        #endregion
+
+        #region Mapper Spectacle
+        public static BLL.Spectacle ToBLL(this DAL.Spectacle entity)
+        {
+            if (entity is null) return null;
+            /* // AVEC Contructeur à 3 paramètres
+             * return new BLL.Spectacle(
+                entity.idSpectacle,
+                entity.nom,
+                entity.description
+                );
+            */
+            //AVEC constructeur prévu pour la DAL
+            return new BLL.Spectacle(entity);
+        }
+
+        public static DAL.Spectacle ToDAL(this BLL.Spectacle entity)
+        {
+            if (entity is null) return null;
+            return new DAL.Spectacle()
+            {
+                idSpectacle = entity.idSpectacle,
+                nom = entity.nom,
+                description = entity.description
+            };
+        }
+        #endregion
     }
 }

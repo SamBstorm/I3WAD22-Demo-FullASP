@@ -1,4 +1,5 @@
-﻿using Demo_ASP.Models.ClientModelView;
+﻿using Demo_ASP.Models.ClientViewModels;
+using Demo_ASP.Models.SpectacleViewModels;
 using Demo_BLL.Entities;
 using System;
 using System.Collections.Generic;
@@ -9,6 +10,7 @@ namespace Demo_ASP.Handlers
 {
     public static class Mapper
     {
+        #region Mappers Client
         public static ClientListItem ToListItem(this Client entity)
         {
             if (entity is null) return null;
@@ -32,5 +34,24 @@ namespace Demo_ASP.Handlers
                 adresse = entity.adresse
             };
         }
+        #endregion
+        #region Mappers Spectacle
+        public static SpectacleListItem ToListItem(this Spectacle entity)
+        {
+            if (entity is null) return null;
+            return new SpectacleListItem()
+            {
+                idSpectacle = entity.idSpectacle,
+                nom = entity.nom,
+                description = entity.description
+            };
+        }
+
+        public static Spectacle ToBLL(this SpectacleCreateForm entity)
+        {
+            if (entity is null) return null;
+            return new Spectacle(default(int),entity.nom, entity.description);
+        }
+        #endregion
     }
 }
