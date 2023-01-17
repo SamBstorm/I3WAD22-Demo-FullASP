@@ -30,7 +30,12 @@ namespace Demo_ASP.Controllers
         // GET: SpectacleController/Details/5
         public ActionResult Details(int id)
         {
-            return View();
+            SpectacleDetails model = _service.Get(id).ToDetails();
+            if (model is null) {
+                TempData["Error"] = "Spectacle inexistant...";
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         // GET: SpectacleController/Create
@@ -52,43 +57,51 @@ namespace Demo_ASP.Controllers
         // GET: SpectacleController/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            SpectacleEditForm model = _service.Get(id).ToEdit();
+            if (model is null)
+            {
+                TempData["Error"] = "Spectacle inexistant...";
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         // POST: SpectacleController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int id, SpectacleEditForm form)
         {
-            try
+            if (!ModelState.IsValid) return View(form);
+            if (!_service.Update(id, form.ToBLL()))
             {
-                return RedirectToAction(nameof(Index));
+                ViewBag.Error = "Erreur lors de la mise à jour... Réessayez";
+                return View(form);
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Details", new { id = id });
         }
 
         // GET: SpectacleController/Delete/5
         public ActionResult Delete(int id)
         {
-            return View();
+            SpectacleDelete model = _service.Get(id).ToDelete();
+            if (model is null)
+            {
+                TempData["Error"] = "Spectacle inexistant...";
+                return RedirectToAction("Index");
+            }
+            return View(model);
         }
 
         // POST: SpectacleController/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
+        public ActionResult Delete(int id, SpectacleDelete form)
         {
-            try
+            if (!_service.Delete(id))
             {
-                return RedirectToAction(nameof(Index));
+                TempData["Error"] = "Erreur de suppression...";
             }
-            catch
-            {
-                return View();
-            }
+            return RedirectToAction("Index");
         }
     }
 }

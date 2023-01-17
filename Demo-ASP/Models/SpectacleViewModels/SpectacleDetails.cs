@@ -7,18 +7,14 @@ using System.Threading.Tasks;
 
 namespace Demo_ASP.Models.SpectacleViewModels
 {
-    public class SpectacleCreateForm
+    public class SpectacleDetails
     {
-        [Required]
-        [MinLength(3)]
-        [MaxLength(50)]
-        [DisplayName("Spectacle : ")]
+        [DisplayName("Identifiant : ")]
+        [ScaffoldColumn(false)]
+        public int idSpectacle { get; set; }
+        [DisplayName("Spectacle")]
         public string nom { get; set; }
-        [Required]
-        [MinLength(3)]
-        [MaxLength(4000)]
-        [DisplayName("Description (max. 4000 caractères) : ")]
-        [DataType(DataType.MultilineText)]
+        [DisplayName("Description")]
         public string description { get; set; }
     }
 }

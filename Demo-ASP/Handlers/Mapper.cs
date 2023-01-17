@@ -47,10 +47,46 @@ namespace Demo_ASP.Handlers
             };
         }
 
+        public static SpectacleDetails ToDetails(this Spectacle entity)
+        {
+            if (entity is null) return null;
+            return new SpectacleDetails()
+            {
+                idSpectacle = entity.idSpectacle,
+                nom = entity.nom,
+                description = entity.description
+            };
+        }
+
+        public static SpectacleDelete ToDelete(this Spectacle entity)
+        {
+            if (entity is null) return null;
+            return new SpectacleDelete()
+            {
+                idSpectacle = entity.idSpectacle,
+                nom = entity.nom
+            };
+        }
+        public static SpectacleEditForm ToEdit(this Spectacle entity)
+        {
+            if (entity is null) return null;
+            return new SpectacleEditForm()
+            {
+                nom = entity.nom,
+                description = entity.description
+            };
+        }
+
         public static Spectacle ToBLL(this SpectacleCreateForm entity)
         {
             if (entity is null) return null;
             return new Spectacle(default(int),entity.nom, entity.description);
+        }
+
+        public static Spectacle ToBLL(this SpectacleEditForm entity)
+        {
+            if (entity is null) return null;
+            return new Spectacle(default(int), entity.nom, entity.description);
         }
         #endregion
     }

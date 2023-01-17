@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Demo_ASP.Models.SpectacleViewModels
 {
-    public class SpectacleCreateForm
+    public class SpectacleEditForm
     {
         [Required]
         [MinLength(3)]
