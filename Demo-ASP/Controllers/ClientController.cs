@@ -122,5 +122,15 @@ namespace Demo_ASP.Controllers
             _sessionManager.CurrentUser = currentUser;
             return RedirectToAction("Index");
         }
+
+        public IActionResult Logout()
+        {
+            _sessionManager.CurrentUser = null;
+            /*
+             * OU (Attention, suppression du cookie de session!)
+            HttpContext.Session.Clear();
+            */
+            return RedirectToAction("Index", "Home");
+        }
     }
 }

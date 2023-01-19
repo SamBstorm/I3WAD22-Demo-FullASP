@@ -22,8 +22,9 @@ namespace Demo_ASP.Handlers
                 if (data is null) return null;
                 return JsonSerializer.Deserialize<CurrentUser>(data);
             }
-            set { 
-                _session.SetString(
+            set {
+                if (value is null) _session.Remove(nameof(CurrentUser));
+                else _session.SetString(
                     nameof(CurrentUser),
                     JsonSerializer.Serialize(value)
                     );
