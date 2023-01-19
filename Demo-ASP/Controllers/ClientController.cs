@@ -14,10 +14,12 @@ namespace Demo_ASP.Controllers
     public class ClientController : Controller
     {
         private readonly IClientRepository<Client, int> _service;
+        private readonly SessionManager _sessionManager;
 
-        public ClientController(IClientRepository<Client, int> service)
+        public ClientController(IClientRepository<Client, int> service, SessionManager sessionManager)
         {
             _service = service;
+            _sessionManager = sessionManager;
         }
 
         // GET: ClientController
@@ -97,6 +99,28 @@ namespace Demo_ASP.Controllers
             {
                 return View();
             }
+        }
+
+        public IActionResult Login()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Login(LoginForm form)
+        {
+            if (!ModelState.IsValid) return View();
+            int? id = _service.CheckPassword(form.email, form.pass);
+            if (id is null) return View();
+            CurrentUser currentUser = new CurrentUser()
+            {
+                IdUser = (int)id,
+                Email = form.email,
+                LastConnection = DateTime.Now
+            };
+            _sessionManager.CurrentUser = currentUser;
+            return RedirectToAction("Index");
         }
     }
 }

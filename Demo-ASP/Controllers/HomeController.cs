@@ -1,4 +1,5 @@
 ﻿using Demo_ASP.Models;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
@@ -20,6 +21,8 @@ namespace Demo_ASP.Controllers
 
         public IActionResult Index()
         {
+            HttpContext.Session.SetString("TestSession", "Coucou les wads!");
+            HttpContext.Session.SetString("Phrase", "Les sessions s'est super pratique!");
             return View();
         }
 
