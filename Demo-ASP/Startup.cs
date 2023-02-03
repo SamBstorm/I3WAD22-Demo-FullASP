@@ -59,7 +59,11 @@ namespace Demo_ASP
             services.AddScoped<IClientRepository<BLLObject.Client, int>, BLLServ.ClientService>();
             services.AddScoped<IClientRepository<DALObject.Client, int>, DALServ.ClientService>();
             services.AddScoped<ISpectacleRepository<BLLObject.Spectacle, int>, BLLServ.SpectacleService>();
-            services.AddScoped<ISpectacleRepository<DALObject.Spectacle, int>, DALServ.SpectacleService>(); 
+            services.AddScoped<ISpectacleRepository<DALObject.Spectacle, int>, DALServ.SpectacleService>();
+            services.AddScoped<IRepresentationRepository<BLLObject.Representation, int>, BLLServ.RepresentationService>();
+            services.AddScoped<IRepresentationRepository<DALObject.Representation, int>, DALServ.RepresentationService>();
+            //services.AddScoped<ITypeRepository<BLLObject.Type, int>, BLLServ.TypeService>();
+            //services.AddScoped<ITypeRepository<DALObject.Type, int>, DALServ.TypeService>();
             #endregion
         }
 

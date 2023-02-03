@@ -21,6 +21,8 @@ namespace Demo_BLL.Entities
         }
         public string description { get; set; }
 
+        public IEnumerable<Representation> representations { get; set; }
+
         public Spectacle(int id, string nom, string desc)
         {
             if (string.IsNullOrWhiteSpace(nom)) throw new ArgumentNullException();

@@ -34,5 +34,28 @@ namespace Demo_DAL
                 description = (string)record[nameof(Spectacle.description)]
             };
         }
+
+        public static Entities.Type ToType(this IDataRecord record)
+        {
+            if (record is null) return null;
+            return new Entities.Type()
+            {
+                idType = (int)record[nameof(Entities.Type.idType)],
+                nom = (string)record[nameof(Entities.Type.nom)],
+                prix = (decimal)record[nameof(Entities.Type.prix)]
+            };
+        }
+
+        public static Entities.Representation ToRepresentation(this IDataRecord record)
+        {
+            if (record is null) return null;
+            return new Entities.Representation()
+            {
+                idRepresentation = (int)record[nameof(Representation.idRepresentation)],
+                dateRepresentation = (DateTime)record[nameof(Representation.dateRepresentation)],
+                heureRepresentation = (TimeSpan)record[nameof(Representation.heureRepresentation)],
+                idSpectacle = (int)record[nameof(Representation.idSpectacle)]
+            };
+        }
     }
 }

@@ -66,5 +66,55 @@ namespace Demo_BLL
             };
         }
         #endregion
+
+        #region Mapper Type
+        public static BLL.Type ToBLL(this DAL.Type entity)
+        {
+            if (entity is null) return null;
+            return new BLL.Type()
+            {
+                idType = entity.idType,
+                nom = entity.nom,
+                prix = entity.prix
+            };
+        }
+
+        public static DAL.Type ToDAL(this BLL.Type entity)
+        {
+            if (entity is null) return null;
+            return new DAL.Type()
+            {
+                idType = entity.idType,
+                nom = entity.nom,
+                prix = entity.prix
+            };
+        }
+        #endregion
+
+        #region Mapper Representation
+        public static BLL.Representation ToBLL(this DAL.Representation entity)
+        {
+            if (entity is null) return null;
+            return new BLL.Representation()
+            {
+                idRepresentation = entity.idRepresentation,
+                dateheureRepresentation = entity.dateRepresentation.Add(entity.heureRepresentation),
+                idSpectacle = entity.idSpectacle,
+                spectacle = null
+            };
+        }
+
+        public static DAL.Representation ToDAL(this BLL.Representation entity)
+        {
+            if (entity is null) return null;
+            return new DAL.Representation()
+            {
+                idRepresentation = entity.idRepresentation,
+                dateRepresentation = entity.dateheureRepresentation.Date,
+                heureRepresentation = entity.dateheureRepresentation.TimeOfDay,
+                idSpectacle = entity.spectacle?.idSpectacle ?? entity.idSpectacle
+            };
+        }
+        #endregion
     }
 }

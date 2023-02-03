@@ -16,5 +16,7 @@ namespace Demo_ASP.Models.SpectacleViewModels
         public string nom { get; set; }
         [DisplayName("Description")]
         public string description { get; set; }
+        [DisplayName("Representations :")]
+        public IEnumerable<DateTime> Representations { get; set; }
     }
 }

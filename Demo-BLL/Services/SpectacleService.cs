@@ -11,10 +11,12 @@ namespace Demo_BLL.Services
     public class SpectacleService : ISpectacleRepository<Spectacle, int>
     {
         private readonly ISpectacleRepository<Demo_DAL.Entities.Spectacle, int> _repository;
+        private readonly IRepresentationRepository<Demo_DAL.Entities.Representation, int> _repr_repository;
 
-        public SpectacleService(ISpectacleRepository<Demo_DAL.Entities.Spectacle, int> repository)
+        public SpectacleService(ISpectacleRepository<Demo_DAL.Entities.Spectacle, int> repository, IRepresentationRepository<Demo_DAL.Entities.Representation, int> repr_repository)
         {
             _repository = repository;
+            _repr_repository = repr_repository;
         }
 
         public bool Delete(int id)
@@ -29,7 +31,9 @@ namespace Demo_BLL.Services
 
         public Spectacle Get(int id)
         {
-            return _repository.Get(id).ToBLL();
+            Spectacle entity = _repository.Get(id).ToBLL();
+            entity.representations = _repr_repository.GetBySpectacle(id).Select(e => e.ToBLL());
+            return entity;
         }
 
         public int Insert(Spectacle entity)

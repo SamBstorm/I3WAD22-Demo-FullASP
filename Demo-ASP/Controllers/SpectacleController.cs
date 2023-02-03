@@ -13,24 +13,24 @@ namespace Demo_ASP.Controllers
 {
     public class SpectacleController : Controller
     {
-        private readonly ISpectacleRepository<Spectacle, int> _service;
+        private readonly ISpectacleRepository<Spectacle, int> _serviceSpectacle;
 
-        public SpectacleController(ISpectacleRepository<Spectacle, int> service)
+        public SpectacleController(ISpectacleRepository<Spectacle, int> service, IRepresentationRepository<Representation, int> serviceRepresentation)
         {
-            _service = service;
+            _serviceSpectacle = service;
         }
 
         // GET: SpectacleController
         public ActionResult Index()
         {
-            IEnumerable<SpectacleListItem> model = _service.Get().Select(e => e.ToListItem());
+            IEnumerable<SpectacleListItem> model = _serviceSpectacle.Get().Select(e => e.ToListItem());
             return View(model);
         }
 
         // GET: SpectacleController/Details/5
         public ActionResult Details(int id)
         {
-            SpectacleDetails model = _service.Get(id).ToDetails();
+            SpectacleDetails model = _serviceSpectacle.Get(id).ToDetails();
             if (model is null) {
                 TempData["Error"] = "Spectacle inexistant...";
                 return RedirectToAction("Index");
@@ -50,14 +50,14 @@ namespace Demo_ASP.Controllers
         public ActionResult Create(SpectacleCreateForm form)
         {
             if (!ModelState.IsValid) return View(form);
-            int id = _service.Insert(form.ToBLL());
+            int id = _serviceSpectacle.Insert(form.ToBLL());
             return RedirectToAction("Details", new { id = id });
         }
 
         // GET: SpectacleController/Edit/5
         public ActionResult Edit(int id)
         {
-            SpectacleEditForm model = _service.Get(id).ToEdit();
+            SpectacleEditForm model = _serviceSpectacle.Get(id).ToEdit();
             if (model is null)
             {
                 TempData["Error"] = "Spectacle inexistant...";
@@ -72,7 +72,7 @@ namespace Demo_ASP.Controllers
         public ActionResult Edit(int id, SpectacleEditForm form)
         {
             if (!ModelState.IsValid) return View(form);
-            if (!_service.Update(id, form.ToBLL()))
+            if (!_serviceSpectacle.Update(id, form.ToBLL()))
             {
                 ViewBag.Error = "Erreur lors de la mise à jour... Réessayez";
                 return View(form);
@@ -83,7 +83,7 @@ namespace Demo_ASP.Controllers
         // GET: SpectacleController/Delete/5
         public ActionResult Delete(int id)
         {
-            SpectacleDelete model = _service.Get(id).ToDelete();
+            SpectacleDelete model = _serviceSpectacle.Get(id).ToDelete();
             if (model is null)
             {
                 TempData["Error"] = "Spectacle inexistant...";
@@ -97,7 +97,7 @@ namespace Demo_ASP.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, SpectacleDelete form)
         {
-            if (!_service.Delete(id))
+            if (!_serviceSpectacle.Delete(id))
             {
                 TempData["Error"] = "Erreur de suppression...";
             }

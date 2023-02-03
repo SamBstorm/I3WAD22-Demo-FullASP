@@ -54,7 +54,8 @@ namespace Demo_ASP.Handlers
             {
                 idSpectacle = entity.idSpectacle,
                 nom = entity.nom,
-                description = entity.description
+                description = entity.description,
+                Representations = entity.representations.Select(e => e.dateheureRepresentation)
             };
         }
 

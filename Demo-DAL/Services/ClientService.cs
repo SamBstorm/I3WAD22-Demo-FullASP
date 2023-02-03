@@ -16,6 +16,7 @@ namespace Demo_DAL.Services
         public ClientService(IConfiguration config) : base(config, "Theatre-DB")
         {
         }
+
         public IEnumerable<Client> Get()
         {
             using (SqlConnection connection = new SqlConnection(_connectionString))
